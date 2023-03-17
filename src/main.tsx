@@ -6,7 +6,9 @@ import CellsProvider from './context/CellsContext';
 import SelectionsProvider from './context/SelectionsContext';
 import ScoresProvider from "./context/ScoresContext";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root') as HTMLDivElement;
+
+ReactDOM.createRoot(root).render(
 	<React.StrictMode>
 		<ThemeProvider>
 			<CellsProvider>

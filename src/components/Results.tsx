@@ -1,8 +1,12 @@
-import React from 'react';
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-export default function Results({ winner, nextRound }) {
+type ResultsProps = {
+    winner: string | undefined,
+    nextRound: () => void
+}
+
+export default function Results({ winner, nextRound }: ResultsProps) {
     return (
         <>
             {

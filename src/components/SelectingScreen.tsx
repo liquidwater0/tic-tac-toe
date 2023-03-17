@@ -1,12 +1,17 @@
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useSelections } from '../context/SelectionsContext';
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-export default function SelectingScreen({ setTurn, setSelectScreenOpen }) {
+type SelectingScreenProps = {
+    setTurn: Dispatch<SetStateAction<string>>,
+    setSelectScreenOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export default function SelectingScreen({ setTurn, setSelectScreenOpen }: SelectingScreenProps) {
     const { setSelection } = useSelections();
 
-    function handleClick(selection) {
+    function handleClick(selection: string) {
         setSelection("player", selection);
         setSelection("computer", selection === "x" ? "circle" : "x");
         setTurn(selection);

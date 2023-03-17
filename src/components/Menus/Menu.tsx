@@ -1,7 +1,12 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Close } from '@mui/icons-material';
+import { TMenu } from "../../types";
 
-export default function Menu({ children, title, value, setValue }) {
+type MenuProps = {
+    children: ReactNode,
+} & TMenu;
+
+export default function Menu({ children, title, value, setValue }: MenuProps) {
     return (
         <>
             {

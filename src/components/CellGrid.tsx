@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCells } from "../context/CellsContext";
 import { useSelections } from '../context/SelectionsContext';
 import { useScores } from '../context/ScoresContext';
@@ -7,13 +6,13 @@ import ScoreBox from './ScoreBox';
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-export default function CellGrid(props) {
-    const {
-        handleCellClick,
-        turn,
-        round
-    } = props;
+type CellGridProps = {
+    handleCellClick: (cellNumber: number) => void,
+    turn: string,
+    round: number
+}
 
+export default function CellGrid({ handleCellClick, turn, round }: CellGridProps) {
     const { cells } = useCells();
     const { playerSelection, computerSelection } = useSelections();
     const { playerScore, computerScore } = useScores();
@@ -39,7 +38,7 @@ export default function CellGrid(props) {
                     return (
                         <Cell 
                             key={cell} 
-                            cellNumber={cell}
+                            cell={cell}
                             selection={selection} 
                             turn={turn}
                             onClick={handleCellClick}

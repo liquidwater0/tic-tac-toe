@@ -1,6 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, ReactNode } from 'react';
+import { TCell } from '../types';
 
-const CellsContext = React.createContext();
+type CellsContextType = {
+    cells: TCell[],
+    emptyCells: TCell[],
+    selectCell: (cellNumber: number, selection: string) => void,
+    clearCells: () => void
+}
+
+const CellsContext = React.createContext<CellsContextType>(null!);
 
 export function useCells() {
     return useContext(CellsContext);
@@ -18,23 +26,27 @@ const initialCells = [
     { cell: 9, selection: null }
 ];
 
-export default function CellsProvider({ children }) {
-    const [cells, setCells] = useState(initialCells);
-    const [emptyCells, setEmptyCells] = useState(initialCells);
+export default function CellsProvider({ children }: { children: ReactNode }) {
+    const [cells, setCells] = useState<TCell[]>(initialCells);
+    const [emptyCells, setEmptyCells] = useState<TCell[]>(() => {
+        return cells.filter((cell: TCell) => cell.selection === null);
+    });
 
     useEffect(() => {
-        setEmptyCells(() => {
-            const cellsCopy = [...cells];
+        setEmptyCells(prev => {
+            const cellsCopy = [...prev];
             return cellsCopy.filter(cell => cell.selection === null);
         });
         // console.log(emptyCells);
     }, [cells]);
 
-    function selectCell(cellNumber, selection) {
+    function selectCell(cellNumber: number, selection: string) {
         setCells(prev => {
             const cellsCopy = [...prev];
             const cell = cellsCopy.find(({ cell }) => cell === cellNumber);
-            cell.selection = selection;
+
+            if (cell) cell.selection = selection;
+            
             return cellsCopy;
         });
     }

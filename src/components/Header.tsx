@@ -1,4 +1,3 @@
-import React from 'react';
 import Circle from "./Selections/Circle";
 
 export default function Header() {

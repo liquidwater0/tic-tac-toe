@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
 import { useSelections } from './context/SelectionsContext';
@@ -26,11 +26,11 @@ export default function App() {
     const { cells, emptyCells, selectCell, clearCells } = useCells();
     const { playerSelection, computerSelection, setSelection } = useSelections();
     const { playerScore, computerScore, setScore } = useScores();
-    const [round, setRound] = useState(0);
-    const [winner, setWinner] = useState(undefined);
-    const [turn, setTurn] = useState(playerSelection);
-    const [selectScreenOpen, setSelectScreenOpen] = useState(true);
-    const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
+    const [round, setRound] = useState<number>(0);
+    const [winner, setWinner] = useState<string | undefined>(undefined);
+    const [turn, setTurn] = useState<string>(playerSelection);
+    const [selectScreenOpen, setSelectScreenOpen] = useState<boolean>(true);
+    const [settingsMenuOpen, setSettingsMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
         checkWin();
@@ -59,13 +59,14 @@ export default function App() {
         }
     }
 
-    function handleCellClick(cellNumber) {
+    function handleCellClick(cellNumber: number) {
         const selectedCell = cells.find(cell => cell.cell === cellNumber);
-        const cell = selectedCell.cell;
+        const cell = selectedCell?.cell;
 
         if (emptyCells.length < 1) return;
-        if (selectedCell.selection !== null) return;
+        if (selectedCell?.selection !== null) return;
         if (turn === computerSelection) return;
+        if (!cell) return;
 
         selectCell(cell, playerSelection);
         getComputerSelection();

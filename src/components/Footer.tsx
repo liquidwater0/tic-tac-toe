@@ -1,6 +1,11 @@
-import React from 'react';
+type FooterProps = {
+    selectScreenOpen: boolean,
+    changeSelection: () => void,
+    reset: () => void,
+    openSettings: () => void
+}
 
-export default function Footer({ selectScreenOpen, changeSelection, reset, openSettings }) {
+export default function Footer({ selectScreenOpen, changeSelection, reset, openSettings }: FooterProps) {
     return (
         <footer className='footer'>
             <div>
