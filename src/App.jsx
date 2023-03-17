@@ -10,18 +10,6 @@ import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
 import Results from './components/Results';
 
-/*
-    TODO:
-    Fix empty cells not filtering out selected cells.
-    Fix buggy winner states.
-    Fix lag.
-    Fix computer still choosing after changing selections or resetting.
-    Make settings menu.
-    Make color scheme and theme changer.
-    Make light mode styles.
-    Make computer choose cycle animation?
-*/
-
 const COMPUTER_DELAY = 3000;
 const WINNING_COMBINATIONS = [
     [0, 1, 2],
