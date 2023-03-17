@@ -1,0 +1,48 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.cell-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $cell-gap;
+    place-items: center;
+
+    .turn-box {
+        grid-column: 1 / -1;
+    }
+
+    .outlined-box {
+        @include flexCenter;
+
+        padding: 0.5rem 0;
+        border-radius: $cell-corner-radius;
+        border: 5px solid var(--theme-text-color);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        text-transform: uppercase;
+
+        .x, .circle {
+            font-size: 0.35rem;
+        }
+
+        &.x-color {
+            border-color: var(--x-color);
+        }
+
+        &.circle-color {
+            border-color: var(--circle-color);
+        }
+
+        .heading-text {
+            color: var(--score-box-text-secondary);
+            font-weight: bold;
+        }
+    
+        .text {
+            color: var(--theme-text-color);
+            font-weight: 550;
+            font-size: 1.25rem;
+        }
+    }
+}

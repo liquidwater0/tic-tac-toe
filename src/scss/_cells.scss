@@ -1,0 +1,21 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.cell {
+    @include flexCenter;
+
+    background-color: var(--theme-color-2);
+    border-bottom: var(--border);
+    width: $cell-size;
+    border-radius: $cell-corner-radius;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+
+    &.no-hover {
+        cursor: default;
+    }
+    
+    &:not(.no-hover):hover {
+        background-color: var(--cell-hover);
+    }
+}

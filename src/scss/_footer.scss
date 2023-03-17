@@ -1,0 +1,11 @@
+@use "./variables" as *;
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+
+    & > div:first-child button:first-child {
+        margin-right: 25px;
+    }
+}

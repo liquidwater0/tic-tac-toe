@@ -1,0 +1,62 @@
+@use "./mixins" as *;
+@use "./variables" as *;
+
+.x, .circle {
+    @include flexCenter;
+    
+    position: relative;
+    padding: 1.35rem;
+
+    &::before, &::after {
+        content: "";
+        position: absolute;
+    }
+}
+
+.x {
+    --animation-duration: 300ms;
+
+    &::before, &::after {
+        width: 1em;
+        height: 6em;
+        border-radius: 100em;
+        background-color: var(--x-color);
+        transform: scaleY(0);
+        transform-origin: center;
+        animation: draw-x var(--animation-duration) forwards;
+    }
+
+    &::before {
+        rotate: 45deg;
+    }
+
+    &::after {
+        rotate: -45deg;
+        animation-delay: var(--animation-duration);
+    }
+}
+
+.circle {
+    --animation-duration: 300ms;
+    
+    &::before {
+        background-color: transparent;
+        width: 6em;
+        aspect-ratio: 1 / 1;
+        border-radius: 100em;
+        border: 0 solid var(--circle-color);
+        animation: draw-circle var(--animation-duration) forwards;
+    }
+}
+
+@keyframes draw-x {
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes draw-circle {
+    to {
+        border-width: 1.25em;
+    }
+}

@@ -1,0 +1,57 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+@use "./selections" as *;
+@use "./results" as *;
+@use "./buttons" as *;
+@use "./cells" as *;
+@use "./header" as *;
+@use "./cellGrid" as *;
+@use "./footer" as *;
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+body {
+    background-color: var(--theme-color-1);
+}
+
+#root {
+    display: grid;
+    grid-template-rows: min-content 1fr min-content;
+    height: 100vh;
+}
+
+.main {
+    @include flexCenter;
+}
+
+.selecting-screen {
+    @include flexCenter;
+
+    flex-direction: column;
+    color: var(--theme-text-color);
+
+    & > div{
+        display: flex;
+        margin-top: 5rem;
+        gap: 2.5rem;
+    }
+
+    button {
+        @include button;
+
+        background-color: var(--theme-color-2);
+        width: 7rem;
+        border-radius: 0.75em;
+        border-bottom: var(--border);
+        aspect-ratio: 1 / 1;
+
+        &:hover {
+            background-color: var(--cell-hover);
+        }
+    }
+}

@@ -1,0 +1,12 @@
+@mixin button {
+    outline: none;
+    border: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
