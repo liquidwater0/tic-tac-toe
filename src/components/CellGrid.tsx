@@ -1,37 +1,33 @@
 import { useCells } from "../context/CellsContext";
-import { useSelections } from '../context/SelectionsContext';
-import { useScores } from '../context/ScoresContext';
+import { useGameState } from "../context/GameStateContent";
 import Cell from './Cell';
 import ScoreBox from './ScoreBox';
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
 type CellGridProps = {
-    handleCellClick: (cellNumber: number) => void,
-    turn: string,
-    round: number
+    handleCellClick: (cellNumber: number) => void
 }
 
-export default function CellGrid({ handleCellClick, turn, round }: CellGridProps) {
+export default function CellGrid({ handleCellClick }: CellGridProps) {
     const { cells } = useCells();
-    const { playerSelection, computerSelection } = useSelections();
-    const { playerScore, computerScore } = useScores();
+    const { gameState } = useGameState();
     
     return (
         <div className="cell-grid">
             <ScoreBox
                 heading="You"
-                value={playerScore}
-                selection={playerSelection}
+                value={gameState.playerScore}
+                selection={gameState.playerSelection}
             />
             <ScoreBox
                 heading="Round"
-                value={round}
+                value={gameState.round}
             />
             <ScoreBox
                 heading="Computer"
-                value={computerScore}
-                selection={computerSelection}
+                value={gameState.computerScore}
+                selection={gameState.computerSelection}
             />
             {
                 cells.map(({ cell, selection }) => {
@@ -40,15 +36,15 @@ export default function CellGrid({ handleCellClick, turn, round }: CellGridProps
                             key={cell} 
                             cell={cell}
                             selection={selection} 
-                            turn={turn}
+                            turn={gameState.turn}
                             onClick={handleCellClick}
                         />
                     );
                 })
             }
-            <div className={`outlined-box turn-box ${turn}-color`}>
-                { turn === "x" && <X/> }
-                { turn === "circle" && <Circle/> }
+            <div className={`outlined-box turn-box ${gameState.turn}-color`}>
+                { gameState.turn === "x" && <X/> }
+                { gameState.turn === "circle" && <Circle/> }
                 <span className='text'>Playing</span>
             </div>
         </div>

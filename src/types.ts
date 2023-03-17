@@ -10,3 +10,13 @@ export type TMenu = {
     value: boolean,
     setValue: Dispatch<SetStateAction<boolean>>
 }
+
+export type TGameState = {
+    playerSelection: null | string,
+    computerSelection: null | string,
+    playerScore: number,
+    computerScore: number,
+    round: number,
+    winner: null | string,
+    turn: null | string
+}

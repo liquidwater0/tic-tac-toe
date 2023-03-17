@@ -4,7 +4,7 @@ import Circle from "./Selections/Circle";
 type ScoreBoxProps = {
     heading: string,
     value: number,
-    selection?: string
+    selection?: string | null
 }
 
 export default function ScoreBox({ heading, value, selection }: ScoreBoxProps) {

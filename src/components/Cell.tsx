@@ -1,17 +1,17 @@
-import { useSelections } from '../context/SelectionsContext';
+import { useGameState } from "../context/GameStateContent";
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
 type CellProps = {
     cell: number,
     selection: string | null,
-    turn: string,
+    turn: string | null,
     onClick: (cellNumber: number) => void
 }
 
 export default function Cell({ cell, selection, turn, onClick }: CellProps) {
-    const { computerSelection } = useSelections();
-    const computerChoosing = turn === computerSelection;
+    const { gameState } = useGameState();
+    const computerChoosing = turn === gameState.computerSelection;
 
     return (
         <div 

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
-import { useSelections } from './context/SelectionsContext';
-import { useScores } from "./context/ScoresContext";
+import { useGameState, ACTIONS } from "./context/GameStateContent";
 import Header from "./components/Header";
 import CellGrid from "./components/CellGrid";
 import Footer from "./components/Footer";
@@ -24,11 +23,7 @@ const WINNING_COMBINATIONS = [
 
 export default function App() {
     const { cells, emptyCells, selectCell, clearCells } = useCells();
-    const { playerSelection, computerSelection, setSelection } = useSelections();
-    const { playerScore, computerScore, setScore } = useScores();
-    const [round, setRound] = useState<number>(0);
-    const [winner, setWinner] = useState<string | undefined>(undefined);
-    const [turn, setTurn] = useState<string>(playerSelection);
+    const { gameState, setGameState } = useGameState();
     const [selectScreenOpen, setSelectScreenOpen] = useState<boolean>(true);
     const [settingsMenuOpen, setSettingsMenuOpen] = useState<boolean>(false);
 
@@ -45,17 +40,17 @@ export default function App() {
         });
 
         if (xWin) {
-            setWinner("x");
-            if (playerSelection === "x") setScore("player", playerScore + 1);
-            if (computerSelection === "x") setScore("computer", computerScore + 1);
+            setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "x" });
+            if (gameState.playerSelection === "x") setGameState({ type: ACTIONS.INCREMENT_PLAYER_SCORE });
+            if (gameState.computerSelection === "x") setGameState({ type: ACTIONS.INCREMENT_COMPUTER_SCORE });;
         }
         if (circleWin) {
-            setWinner("circle");
-            if (playerSelection === "circle") setScore("player", playerScore + 1);
-            if (computerSelection === "circle") setScore("computer", computerScore + 1);
+            setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "circle" });
+            if (gameState.playerSelection === "circle") setGameState({ type: ACTIONS.INCREMENT_PLAYER_SCORE });
+            if (gameState.computerSelection === "circle") setGameState({ type: ACTIONS.INCREMENT_COMPUTER_SCORE });
         }
         if (emptyCells.length < 1 && !xWin && !circleWin) {
-            setWinner("draw");
+            setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "draw" });
         }
     }
 
@@ -65,44 +60,43 @@ export default function App() {
 
         if (emptyCells.length < 1) return;
         if (selectedCell?.selection !== null) return;
-        if (turn === computerSelection) return;
-        if (!cell) return;
+        if (gameState.turn === gameState.computerSelection) return;
+        if (!cell || !gameState.playerSelection) return;
 
-        selectCell(cell, playerSelection);
+        selectCell(cell, gameState.playerSelection);
         getComputerSelection();
     }
 
     function getComputerSelection() {
-        setTurn(computerSelection);
+        setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.computerSelection });
 
         setTimeout(() => {
             const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
             const cellNumber = randomCell.cell;
+
+            if (!gameState.computerSelection) return;
             
-            selectCell(cellNumber, computerSelection);
-            setTurn(playerSelection);
+            selectCell(cellNumber, gameState.computerSelection);
+            setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.playerSelection });
         }, COMPUTER_DELAY);
     }
 
     function nextRound() {
-        setRound(prev => prev + 1);
-        setWinner(undefined);
+        setGameState({ type: ACTIONS.INCREMENT_ROUND_NUMBER });
+        setGameState({ type: ACTIONS.UPDATE_WINNER, payload: null });
         clearCells();
     }
 
     function changeSelection() {
         setSelectScreenOpen(true);
-        setSelection("player", "")
-        setSelection("computer", "")
+        setGameState({ type: ACTIONS.UPDATE_PLAYER_SELECTION, payload: null });
+        setGameState({ type: ACTIONS.UPDATE_COMPUTER_SELECTION, payload: null });
         clearCells();
     }
 
     function reset() {
         changeSelection();
-        setScore("player", 0);
-        setScore("computer", 0);
-        setRound(0);
-        setWinner(undefined);
+        setGameState({ type: ACTIONS.RESET });
     }
 
     function openSettings() {
@@ -115,15 +109,8 @@ export default function App() {
             <main className='main'>
                 {
                     selectScreenOpen ?
-                    <SelectingScreen 
-                        setTurn={setTurn}
-                        setSelectScreenOpen={setSelectScreenOpen}
-                    /> :
-                    <CellGrid 
-                        handleCellClick={handleCellClick} 
-                        turn={turn}
-                        round={round}
-                    />
+                    <SelectingScreen setSelectScreenOpen={setSelectScreenOpen}/> :
+                    <CellGrid handleCellClick={handleCellClick}/>
                 }
             </main>
             <Footer 
@@ -132,10 +119,7 @@ export default function App() {
                 reset={reset}
                 openSettings={openSettings}
             />
-            <Results
-                winner={winner}
-                nextRound={nextRound}
-            />
+            <Results nextRound={nextRound}/>
             <SettingsMenu
                 title="Settings"
                 value={settingsMenuOpen}
