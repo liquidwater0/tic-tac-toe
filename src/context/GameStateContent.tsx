@@ -41,19 +41,19 @@ function gameStateReducer(
 ) {
     switch(action.type) {
         case ACTIONS.UPDATE_PLAYER_SELECTION:
-            return { ...state, playerSelection: action.payload}
+            return { ...state, playerSelection: action.payload }
         case ACTIONS.UPDATE_COMPUTER_SELECTION:
-            return { ...state, computerSelection: action.payload}
+            return { ...state, computerSelection: action.payload }
         case ACTIONS.INCREMENT_PLAYER_SCORE:
-            return { ...state, playerScore: state.playerScore + 1}
+            return { ...state, playerScore: state.playerScore + 1 }
         case ACTIONS.INCREMENT_COMPUTER_SCORE:
-            return { ...state, computerScore: state.computerScore + 1}
+            return { ...state, computerScore: state.computerScore + 1 }
         case ACTIONS.INCREMENT_ROUND_NUMBER:
-            return { ...state, round: state.round + 1}
+            return { ...state, round: state.round + 1 }
         case ACTIONS.UPDATE_WINNER:
-            return { ...state, winner: action.payload}
+            return { ...state, winner: action.payload }
         case ACTIONS.UPDATE_TURN:
-            return { ...state, turn: action.payload}
+            return { ...state, turn: action.payload }
         case ACTIONS.RESET:
             return initialGameState;
         default:
