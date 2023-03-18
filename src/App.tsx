@@ -9,7 +9,7 @@ import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
 import Results from './components/Results';
 
-const COMPUTER_DELAY = 3000;
+export const COMPUTER_DELAY = 3000;
 const WINNING_COMBINATIONS = [
     [0, 1, 2],
     [3, 4, 5],
@@ -22,7 +22,7 @@ const WINNING_COMBINATIONS = [
 ];
 
 export default function App() {
-    const { cells, emptyCells, selectCell, clearCells } = useCells();
+    const { cells, emptyCells, clearCells } = useCells();
     const { gameState, setGameState } = useGameState();
     const [selectScreenOpen, setSelectScreenOpen] = useState<boolean>(true);
     const [settingsMenuOpen, setSettingsMenuOpen] = useState<boolean>(false);
@@ -54,33 +54,6 @@ export default function App() {
         }
     }
 
-    function handleCellClick(cellNumber: number) {
-        const selectedCell = cells.find(cell => cell.cell === cellNumber);
-        const cell = selectedCell?.cell;
-
-        if (emptyCells.length < 1) return;
-        if (selectedCell?.selection !== null) return;
-        if (gameState.turn === gameState.computerSelection) return;
-        if (!cell || !gameState.playerSelection) return;
-
-        selectCell(cell, gameState.playerSelection);
-        getComputerSelection();
-    }
-
-    function getComputerSelection() {
-        setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.computerSelection });
-
-        setTimeout(() => {
-            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            const cellNumber = randomCell.cell;
-
-            if (!gameState.computerSelection) return;
-            
-            selectCell(cellNumber, gameState.computerSelection);
-            setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.playerSelection });
-        }, COMPUTER_DELAY);
-    }
-
     function nextRound() {
         setGameState({ type: ACTIONS.INCREMENT_ROUND_NUMBER });
         setGameState({ type: ACTIONS.UPDATE_WINNER, payload: null });
@@ -106,20 +79,24 @@ export default function App() {
     return (
         <>
             <Header/>
+
             <main className='main'>
                 {
                     selectScreenOpen ?
                     <SelectingScreen setSelectScreenOpen={setSelectScreenOpen}/> :
-                    <CellGrid handleCellClick={handleCellClick}/>
+                    <CellGrid/>
                 }
             </main>
+
             <Footer 
                 selectScreenOpen={selectScreenOpen}
                 changeSelection={changeSelection}
                 reset={reset}
                 openSettings={openSettings}
             />
+
             <Results nextRound={nextRound}/>
+            
             <SettingsMenu
                 title="Settings"
                 value={settingsMenuOpen}

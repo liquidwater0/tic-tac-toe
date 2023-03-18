@@ -5,11 +5,7 @@ import ScoreBox from './ScoreBox';
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-type CellGridProps = {
-    handleCellClick: (cellNumber: number) => void
-}
-
-export default function CellGrid({ handleCellClick }: CellGridProps) {
+export default function CellGrid() {
     const { cells } = useCells();
     const { gameState } = useGameState();
     
@@ -37,7 +33,6 @@ export default function CellGrid({ handleCellClick }: CellGridProps) {
                             cell={cell}
                             selection={selection} 
                             turn={gameState.turn}
-                            onClick={handleCellClick}
                         />
                     );
                 })
