@@ -10,7 +10,7 @@ type SelectingScreenProps = {
 export default function SelectingScreen({ setSelectScreenOpen }: SelectingScreenProps) {
     const { setGameState } = useGameState();
 
-    function handleClick(selection: string) {
+    function handleSelectionPicked(selection: string) {
         setGameState({ type: ACTIONS.UPDATE_PLAYER_SELECTION, payload: selection });
         setGameState({ type: ACTIONS.UPDATE_COMPUTER_SELECTION, payload: selection === "x" ? "circle" : "x" });
         setGameState({ type: ACTIONS.UPDATE_TURN, payload: selection });
@@ -22,12 +22,12 @@ export default function SelectingScreen({ setSelectScreenOpen }: SelectingScreen
             <h1>Choose Your Selection</h1>
             <div>
                 <button
-                    onClick={() => handleClick("x")}
+                    onClick={() => handleSelectionPicked("x")}
                 >
                     <X/>
                 </button>
                 <button
-                    onClick={() => handleClick("circle")}
+                    onClick={() => handleSelectionPicked("circle")}
                 >
                     <Circle/>
                 </button>
