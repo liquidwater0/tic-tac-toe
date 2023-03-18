@@ -8,11 +8,13 @@ $cell-corner-radius: 0.35rem;
 }
 
 html[data-theme="dark"] {
-    --theme-color-1: hsl(0, 0%, 18%);
-    --theme-color-2: hsl(0, 0%, 25%);
+    --theme-color-1: hsl(0, 0%, 15%);
+    --theme-color-2: hsl(0, 0%, 20%);
+
     --theme-text-color: white;
     --theme-text-color-opposite: black;
+
+    --cell-hover: hsl(0, 0%, 25%);
+    --border: 3px solid hsl(0, 0%, 30%);
     --score-box-text-secondary: hsl(0, 0%, 65%);
-    --cell-hover: hsl(0, 0%, 30%);
-    --border: 3px solid hsl(0, 0%, 35%);
 }
