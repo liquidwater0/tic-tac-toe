@@ -1,15 +1,11 @@
 import { COMPUTER_DELAY } from "../App";
 import { useGameState, ACTIONS } from "../context/GameStateContent";
 import { useCells } from "../context/CellsContext";
+import { TCell } from "../types";
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-type CellProps = {
-    cell: number,
-    selection: string | null
-}
-
-export default function Cell({ cell, selection }: CellProps) {
+export default function Cell({ cell, selection }: TCell) {
     const { gameState, setGameState } = useGameState();
     const { cells, emptyCells, selectCell } = useCells();
     const computerChoosing = gameState.turn === gameState.computerSelection;
