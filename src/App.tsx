@@ -94,12 +94,24 @@ export default function App() {
                 }
             </main>
 
-            <Footer 
-                selectScreenOpen={selectScreenOpen}
-                changeSelection={changeSelection}
-                reset={reset}
-                openSettings={openSettings}
-            />
+            <footer className='footer'>
+                <div>
+                    <button className='btn btn-outlined btn-danger' onClick={reset}>
+                        Reset
+                    </button>
+                    {
+                        !selectScreenOpen &&
+                        <button className='btn btn-outlined' onClick={changeSelection}>
+                            Change Selection
+                        </button>
+                    }
+                </div>
+                <div>
+                    <button className='btn btn-outlined' onClick={openSettings}>
+                        Settings
+                    </button>
+                </div>
+            </footer>
 
             <Results nextRound={nextRound}/>
 
