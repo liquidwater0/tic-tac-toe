@@ -35,10 +35,7 @@ const initialGameState = {
     turn: null
 }
 
-function gameStateReducer(
-    state: TGameState, 
-    action: TGameStateAction
-) {
+function gameStateReducer(state: TGameState, action: TGameStateAction) {
     switch(action.type) {
         case ACTIONS.UPDATE_PLAYER_SELECTION:
             return { ...state, playerSelection: action.payload }
