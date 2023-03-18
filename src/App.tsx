@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
 import { useGameState, ACTIONS } from "./context/GameStateContent";
+import X from './components/Selections/X';
 import Circle from './components/Selections/Circle';
 import CellGrid from "./components/CellGrid";
 import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
-import Results from './components/Results';
 
 export const COMPUTER_DELAY = 3000;
 const WINNING_COMBINATIONS = [
@@ -112,7 +112,21 @@ export default function App() {
                 </div>
             </footer>
 
-            <Results nextRound={nextRound}/>
+            {
+                gameState.winner !== null &&
+                <div className='results'>
+                    <div className="results-container">
+                        <div className='results-text'>
+                            { gameState.winner === "x" && <X/> }
+                            { gameState.winner === "circle" && <Circle/> }
+                            <span>{ gameState.winner === "draw" ? "Draw!" : "Wins!" }</span>
+                        </div>
+                        <button className='btn' onClick={nextRound}>
+                            Next Round
+                        </button>
+                    </div>
+                </div>
+            }
 
             <SettingsMenu
                 title="Settings"
