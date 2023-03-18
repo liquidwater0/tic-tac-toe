@@ -6,14 +6,13 @@ import Circle from "./Selections/Circle";
 
 type CellProps = {
     cell: number,
-    selection: string | null,
-    turn: string | null
+    selection: string | null
 }
 
-export default function Cell({ cell, selection, turn }: CellProps) {
+export default function Cell({ cell, selection }: CellProps) {
     const { gameState, setGameState } = useGameState();
     const { cells, emptyCells, selectCell } = useCells();
-    const computerChoosing = turn === gameState.computerSelection;
+    const computerChoosing = gameState.turn === gameState.computerSelection;
 
     function handleCellClick(cellNumber: number) {
         const selectedCell = cells.find(({ cell }) => cell === cellNumber);

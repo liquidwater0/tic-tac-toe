@@ -31,8 +31,7 @@ export default function CellGrid() {
                         <Cell 
                             key={cell} 
                             cell={cell}
-                            selection={selection} 
-                            turn={gameState.turn}
+                            selection={selection}
                         />
                     );
                 })
