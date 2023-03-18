@@ -36,6 +36,7 @@ export default function App() {
         const xWin = WINNING_COMBINATIONS.some(array => {
             return array.every(index => cells[index].selection === "x");
         });
+
         const circleWin = WINNING_COMBINATIONS.some(array => {
             return array.every(index => cells[index].selection === "circle");
         });
@@ -45,11 +46,13 @@ export default function App() {
             if (gameState.playerSelection === "x") setGameState({ type: ACTIONS.INCREMENT_PLAYER_SCORE });
             if (gameState.computerSelection === "x") setGameState({ type: ACTIONS.INCREMENT_COMPUTER_SCORE });;
         }
+
         if (circleWin) {
             setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "circle" });
             if (gameState.playerSelection === "circle") setGameState({ type: ACTIONS.INCREMENT_PLAYER_SCORE });
             if (gameState.computerSelection === "circle") setGameState({ type: ACTIONS.INCREMENT_COMPUTER_SCORE });
         }
+
         if (emptyCells.length < 1 && !xWin && !circleWin) {
             setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "draw" });
         }

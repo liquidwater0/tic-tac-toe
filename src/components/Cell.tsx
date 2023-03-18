@@ -16,7 +16,7 @@ export default function Cell({ cell, selection, turn }: CellProps) {
     const computerChoosing = turn === gameState.computerSelection;
 
     function handleCellClick(cellNumber: number) {
-        const selectedCell = cells.find(cell => cell.cell === cellNumber);
+        const selectedCell = cells.find(({ cell }) => cell === cellNumber);
         const cell = selectedCell?.cell;
     
         if (emptyCells.length < 1) return;
