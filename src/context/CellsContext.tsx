@@ -28,9 +28,7 @@ const initialCells = [
 
 export default function CellsProvider({ children }: { children: ReactNode }) {
     const [cells, setCells] = useState<TCell[]>(initialCells);
-    const [emptyCells, setEmptyCells] = useState<TCell[]>(() => {
-        return cells.filter((cell: TCell) => cell.selection === null);
-    });
+    const [emptyCells, setEmptyCells] = useState<TCell[]>(initialCells);
 
     useEffect(() => {
         setEmptyCells(prev => {
