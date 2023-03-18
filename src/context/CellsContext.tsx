@@ -33,9 +33,9 @@ export default function CellsProvider({ children }: { children: ReactNode }) {
     function selectCell(cellNumber: number, selection: string) {
         setCells(prev => {
             const cellsCopy = [...prev];
-            const cell = cellsCopy.find(({ cell }) => cell === cellNumber);
+            const selectedCell = cellsCopy.find(({ cell }) => cell === cellNumber);
 
-            if (cell) cell.selection = selection;
+            if (selectedCell) selectedCell.selection = selection;
             
             return cellsCopy;
         });
@@ -49,8 +49,7 @@ export default function CellsProvider({ children }: { children: ReactNode }) {
     function clearCells() {
         setCells(prev => {
             const cellsCopy = [...prev];
-            cellsCopy.forEach(cell => cell.selection = null);
-            return cellsCopy;
+            return cellsCopy.map(cell => ({ ...cell, selection: null }));
         });
     }
 
