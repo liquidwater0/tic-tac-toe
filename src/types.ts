@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react"
-
 export type TCell = {
     cell: number,
     selection: string | null
@@ -7,8 +5,7 @@ export type TCell = {
 
 export type TMenu = {
     title: string,
-    value: boolean,
-    setValue: Dispatch<SetStateAction<boolean>>
+    menuId: string
 }
 
 export type TGameState = {

@@ -1,23 +1,26 @@
 import { ReactNode } from 'react';
 import { Close } from '@mui/icons-material';
 import { TMenu } from "../../types";
+import { useMenus } from '../../context/MenuContext';
 
 type MenuProps = {
     children: ReactNode,
 } & TMenu;
 
-export default function Menu({ children, title, value, setValue }: MenuProps) {
+export default function Menu({ children, title, menuId }: MenuProps) {
+    const { menus, closeMenu } = useMenus();
+
     return (
         <>
             {
-                value &&
+                menus[menuId] &&
                 <div className='menu'>
                     <div className="menu-container">
                         <header className="menu-header">
                             <span>{ title }</span>
                             <button
                                 className='menu-close-button'
-                                onClick={() => setValue(false)}
+                                onClick={() => closeMenu(menuId)}
                             >
                                 <Close/>
                             </button>

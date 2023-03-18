@@ -4,6 +4,7 @@ import App from './App';
 import ThemeProvider from './context/ThemeContext';
 import CellsProvider from './context/CellsContext';
 import GameStateProvider from './context/GameStateContent';
+import MenuProvider from './context/MenuContext';
 
 const root = document.getElementById('root') as HTMLDivElement;
 
@@ -12,7 +13,9 @@ ReactDOM.createRoot(root).render(
 		<ThemeProvider>
 			<GameStateProvider>
 				<CellsProvider>
-					<App />
+					<MenuProvider>
+						<App />
+					</MenuProvider>
 				</CellsProvider>
 			</GameStateProvider>
 		</ThemeProvider>

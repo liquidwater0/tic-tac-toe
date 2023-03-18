@@ -1,12 +1,10 @@
 import Menu from "./Menu";
-import { TMenu } from "../../types";
 
-export default function SettingsMenu({ title, value, setValue }: TMenu) {
+export default function SettingsMenu() {
     return (
         <Menu 
-            title={title} 
-            value={value} 
-            setValue={setValue}
+            title="Settings"
+            menuId="settingsMenu"
         >
             setting
         </Menu>

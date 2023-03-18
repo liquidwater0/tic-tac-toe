@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
 import { useGameState, ACTIONS } from "./context/GameStateContent";
+import { useMenus } from './context/MenuContext';
 import X from './components/Selections/X';
 import Circle from './components/Selections/Circle';
 import CellGrid from "./components/CellGrid";
@@ -23,8 +24,8 @@ const WINNING_COMBINATIONS = [
 export default function App() {
     const { cells, emptyCells, clearCells } = useCells();
     const { gameState, setGameState } = useGameState();
+    const { openMenu } = useMenus();
     const [selectScreenOpen, setSelectScreenOpen] = useState<boolean>(true);
-    const [settingsMenuOpen, setSettingsMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
         checkWin();
@@ -71,10 +72,6 @@ export default function App() {
         setGameState({ type: ACTIONS.RESET });
     }
 
-    function openSettings() {
-        setSettingsMenuOpen(true);
-    }
-
     return (
         <>
             <header className='header'>
@@ -106,7 +103,7 @@ export default function App() {
                     }
                 </div>
                 <div>
-                    <button className='btn btn-outlined' onClick={openSettings}>
+                    <button className='btn btn-outlined' onClick={() => openMenu("settingsMenu")}>
                         Settings
                     </button>
                 </div>
@@ -128,11 +125,7 @@ export default function App() {
                 </div>
             }
 
-            <SettingsMenu
-                title="Settings"
-                value={settingsMenuOpen}
-                setValue={setSettingsMenuOpen}
-            />
+            <SettingsMenu/>
         </>
     );
 }
