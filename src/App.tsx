@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
 import { useGameState, ACTIONS } from "./context/GameStateContent";
-import Header from "./components/Header";
+import Circle from './components/Selections/Circle';
 import CellGrid from "./components/CellGrid";
 import Footer from "./components/Footer";
 import SelectingScreen from './components/SelectingScreen';
@@ -78,7 +78,13 @@ export default function App() {
 
     return (
         <>
-            <Header/>
+            <header className='header'>
+                <div className='title'>
+                    <span>Tic Tac T</span>
+                    <Circle/>
+                    <span>e</span>
+                </div>
+            </header>
 
             <main className='main'>
                 {
@@ -96,7 +102,7 @@ export default function App() {
             />
 
             <Results nextRound={nextRound}/>
-            
+
             <SettingsMenu
                 title="Settings"
                 value={settingsMenuOpen}
