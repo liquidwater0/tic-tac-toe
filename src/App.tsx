@@ -5,6 +5,7 @@ import { useGameState, ACTIONS } from "./context/GameStateContent";
 import { useMenus } from './context/MenuContext';
 import X from './components/Selections/X';
 import Circle from './components/Selections/Circle';
+import Button from './components/Button';
 import CellGrid from "./components/CellGrid";
 import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
@@ -92,20 +93,30 @@ export default function App() {
 
             <footer className='footer'>
                 <div>
-                    <button className='btn btn-outlined btn-danger' onClick={reset}>
+                    <Button 
+                        buttonStyle="outlined" 
+                        className='btn-danger'
+                        onClick={reset}
+                    >
                         Reset
-                    </button>
+                    </Button>
                     {
                         !selectScreenOpen &&
-                        <button className='btn btn-outlined' onClick={changeSelection}>
+                        <Button 
+                            buttonStyle="outlined" 
+                            onClick={changeSelection}
+                        >
                             Change Selection
-                        </button>
+                        </Button>
                     }
                 </div>
                 <div>
-                    <button className='btn btn-outlined' onClick={() => openMenu("settingsMenu")}>
+                    <Button 
+                        buttonStyle="outlined" 
+                        onClick={() => openMenu("settingsMenu")}
+                    >
                         Settings
-                    </button>
+                    </Button>
                 </div>
             </footer>
 
@@ -118,9 +129,9 @@ export default function App() {
                             { gameState.winner === "circle" && <Circle/> }
                             <span>{ gameState.winner === "draw" ? "Draw!" : "Wins!" }</span>
                         </div>
-                        <button className='btn' onClick={nextRound}>
+                        <Button onClick={nextRound}>
                             Next Round
-                        </button>
+                        </Button>
                     </div>
                 </div>
             }
