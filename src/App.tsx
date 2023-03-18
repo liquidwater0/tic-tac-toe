@@ -4,7 +4,6 @@ import { useCells } from "./context/CellsContext";
 import { useGameState, ACTIONS } from "./context/GameStateContent";
 import Circle from './components/Selections/Circle';
 import CellGrid from "./components/CellGrid";
-import Footer from "./components/Footer";
 import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
 import Results from './components/Results';
