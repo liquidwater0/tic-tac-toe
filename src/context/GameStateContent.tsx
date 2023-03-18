@@ -53,7 +53,7 @@ function gameStateReducer(
         case ACTIONS.UPDATE_WINNER:
             return { ...state, winner: action.payload}
         case ACTIONS.UPDATE_TURN:
-            return { ...state, winner: action.payload}
+            return { ...state, turn: action.payload}
         case ACTIONS.RESET:
             return initialGameState;
         default:
