@@ -15,5 +15,6 @@ export type TGameState = {
     computerScore: number,
     round: number,
     winner: null | string,
-    turn: null | string
+    turn: null | string,
+    choosingSelection: boolean
 }

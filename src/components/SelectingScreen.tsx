@@ -1,20 +1,15 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useGameState, ACTIONS } from "../context/GameStateContent";
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-type SelectingScreenProps = {
-    setSelectScreenOpen: Dispatch<SetStateAction<boolean>>
-}
-
-export default function SelectingScreen({ setSelectScreenOpen }: SelectingScreenProps) {
+export default function SelectingScreen() {
     const { setGameState } = useGameState();
 
     function handleSelectionPicked(selection: string) {
         setGameState({ type: ACTIONS.UPDATE_PLAYER_SELECTION, payload: selection });
         setGameState({ type: ACTIONS.UPDATE_COMPUTER_SELECTION, payload: selection === "x" ? "circle" : "x" });
         setGameState({ type: ACTIONS.UPDATE_TURN, payload: selection });
-        setSelectScreenOpen(false);
+        setGameState({ type: ACTIONS.UPDATE_CHOOSING_SELECTION, payload: false });
     }
 
     return (

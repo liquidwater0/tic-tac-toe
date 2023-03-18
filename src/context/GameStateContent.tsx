@@ -22,6 +22,7 @@ export const ACTIONS = {
     INCREMENT_ROUND_NUMBER: "incrementRoundNumber",
     UPDATE_WINNER: "updateWinner",
     UPDATE_TURN: "updateTurn",
+    UPDATE_CHOOSING_SELECTION: "updateChoosingSelection",
     RESET: "reset"
 }
 
@@ -32,7 +33,8 @@ const initialGameState = {
     computerScore: 0,
     round: 0,
     winner: null,
-    turn: null
+    turn: null,
+    choosingSelection: true
 }
 
 function gameStateReducer(state: TGameState, action: TGameStateAction) {
@@ -51,6 +53,8 @@ function gameStateReducer(state: TGameState, action: TGameStateAction) {
             return { ...state, winner: action.payload }
         case ACTIONS.UPDATE_TURN:
             return { ...state, turn: action.payload }
+        case ACTIONS.UPDATE_CHOOSING_SELECTION:
+            return { ...state, choosingSelection: action.payload }
         case ACTIONS.RESET:
             return initialGameState;
         default:

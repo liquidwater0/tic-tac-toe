@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import "./scss/App.scss";
 import { useCells } from "./context/CellsContext";
 import { useGameState, ACTIONS } from "./context/GameStateContent";
@@ -23,10 +23,9 @@ const WINNING_COMBINATIONS = [
 ];
 
 export default function App() {
-    const { cells, emptyCells, clearCells } = useCells();
     const { gameState, setGameState } = useGameState();
+    const { cells, emptyCells, clearCells } = useCells();
     const { openMenu } = useMenus();
-    const [selectScreenOpen, setSelectScreenOpen] = useState<boolean>(true);
 
     useEffect(() => {
         checkWin();
@@ -65,7 +64,7 @@ export default function App() {
     }
 
     function changeSelection() {
-        setSelectScreenOpen(true);
+        setGameState({ type: ACTIONS.UPDATE_CHOOSING_SELECTION, payload: true });
         setGameState({ type: ACTIONS.UPDATE_PLAYER_SELECTION, payload: null });
         setGameState({ type: ACTIONS.UPDATE_COMPUTER_SELECTION, payload: null });
         clearCells();
@@ -88,8 +87,8 @@ export default function App() {
 
             <main className='main'>
                 {
-                    selectScreenOpen ?
-                    <SelectingScreen setSelectScreenOpen={setSelectScreenOpen}/> :
+                    gameState.choosingSelection ?
+                    <SelectingScreen/> :
                     <CellGrid/>
                 }
             </main>
@@ -104,7 +103,7 @@ export default function App() {
                         Reset
                     </Button>
                     {
-                        !selectScreenOpen &&
+                        !gameState.choosingSelection &&
                         <Button 
                             buttonStyle="outlined" 
                             onClick={changeSelection}
