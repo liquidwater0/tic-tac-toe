@@ -1,12 +1,8 @@
 @use "./variables" as *;
 @use "./mixins" as *;
-@use "./selections" as *;
-@use "./results" as *;
 @use "./buttons" as *;
+@use "./selections" as *;
 @use "./cells" as *;
-@use "./header" as *;
-@use "./cellGrid" as *;
-@use "./footer" as *;
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -23,6 +19,25 @@ body {
     display: grid;
     grid-template-rows: min-content 1fr min-content;
     height: 100vh;
+}
+
+.header {
+    @include flexCenter;
+
+    padding: 1rem;
+    user-select: none;
+
+    .title {
+        display: flex;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: var(--theme-text-color);
+
+        .x, .circle {
+            font-size: 0.35rem;
+        }
+    }
 }
 
 .main {
@@ -53,5 +68,93 @@ body {
         &:hover {
             background-color: var(--cell-hover);
         }
+    }
+}
+
+.cell-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $cell-gap;
+    place-items: center;
+
+    .turn-box {
+        grid-column: 1 / -1;
+    }
+
+    .outlined-box {
+        @include flexCenter;
+
+        padding: 0.5rem 0;
+        border-radius: $cell-corner-radius;
+        border: 5px solid var(--theme-text-color);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        text-transform: uppercase;
+
+        .x, .circle {
+            font-size: 0.35rem;
+        }
+
+        &.x-color {
+            border-color: var(--x-color);
+        }
+
+        &.circle-color {
+            border-color: var(--circle-color);
+        }
+
+        .heading-text {
+            color: var(--score-box-text-secondary);
+            font-weight: bold;
+        }
+    
+        .text {
+            color: var(--theme-text-color);
+            font-weight: 550;
+            font-size: 1.25rem;
+        }
+    }
+}
+
+.results {
+    @include flexCenter;
+
+    position: absolute;
+    inset: 0;
+    background-color: hsla(0, 0%, 0%, 0.5);
+
+    .results-container {
+        @include flexCenter;
+
+        flex-direction: column;
+        gap: 2rem;
+        background-color: var(--theme-color-1);
+        padding: 3rem;
+        border-radius: 0.5rem;
+        width: 25rem;
+    }
+
+    .results-text {
+        @include flexCenter;
+
+        font-size: 3rem;
+        color: var(--theme-text-color);
+        font-weight: bold;
+        gap: 2rem;
+
+        .x, .circle {
+            font-size: 0.75rem;
+        }
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+
+    & > div:first-child button:first-child {
+        margin-right: 25px;
     }
 }
