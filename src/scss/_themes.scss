@@ -9,3 +9,15 @@ html[data-theme="dark"] {
     --border: 3px solid hsl(0, 0%, 30%);
     --score-box-text-secondary: hsl(0, 0%, 65%);
 }
+
+html[data-theme="light"] {
+    --theme-color-1: hsl(0, 0%, 100%);
+    --theme-color-2: hsl(0, 0%, 95%);
+
+    --theme-text-color: black;
+    --theme-text-color-opposite: white;
+
+    --cell-hover: hsl(0, 0%, 90%);
+    --border: 3px solid hsl(0, 0%, 85%);
+    --score-box-text-secondary: hsl(0, 0%, 25%);
+}
