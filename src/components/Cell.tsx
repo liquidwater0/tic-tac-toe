@@ -1,41 +1,15 @@
-import { COMPUTER_DELAY } from "../App";
-import { useGameState, ACTIONS } from "../context/GameStateContent";
-import { useCells } from "../context/CellsContext";
+import { useGameState } from "../context/GameStateContent";
 import { TCell } from "../types";
 import X from "./Selections/X";
 import Circle from "./Selections/Circle";
 
-export default function Cell({ cell, selection }: TCell) {
-    const { gameState, setGameState } = useGameState();
-    const { cells, emptyCells, selectCell } = useCells();
+type CellProps = {
+    handleCellClick: (cellNumber: number) => void
+} & TCell
+
+export default function Cell({ cell, selection, handleCellClick }: CellProps) {
+    const { gameState } = useGameState();
     const computerChoosing = gameState.turn === gameState.computerSelection;
-
-    function handleCellClick(cellNumber: number) {
-        const selectedCell = cells.find(({ cell }) => cell === cellNumber);
-        const cell = selectedCell?.cell;
-    
-        if (emptyCells.length < 1) return;
-        if (selectedCell?.selection !== null) return;
-        if (gameState.turn === gameState.computerSelection) return;
-        if (!cell || !gameState.playerSelection) return;
-    
-        selectCell(cell, gameState.playerSelection);
-        getComputerSelection();
-    }
-
-    function getComputerSelection() {
-        setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.computerSelection });
-
-        setTimeout(() => {
-            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            const cellNumber = randomCell.cell;
-
-            if (!gameState.computerSelection) return;
-            
-            selectCell(cellNumber, gameState.computerSelection);
-            setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.playerSelection });
-        }, COMPUTER_DELAY);
-    }
 
     return (
         <div 

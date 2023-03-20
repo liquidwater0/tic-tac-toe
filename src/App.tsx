@@ -6,7 +6,8 @@ import { useMenus } from './context/MenuContext';
 import X from './components/Selections/X';
 import Circle from './components/Selections/Circle';
 import Button from './components/Button';
-import CellGrid from "./components/CellGrid";
+import Cell from './components/Cell';
+import ScoreBox from './components/ScoreBox';
 import SelectingScreen from './components/SelectingScreen';
 import SettingsMenu from './components/Menus/SettingsMenu';
 
@@ -24,7 +25,7 @@ const WINNING_COMBINATIONS = [
 
 export default function App() {
     const { gameState, setGameState } = useGameState();
-    const { cells, emptyCells, clearCells } = useCells();
+    const { cells, emptyCells, selectCell, clearCells } = useCells();
     const { openMenu } = useMenus();
 
     useEffect(() => {
@@ -55,6 +56,33 @@ export default function App() {
         if (emptyCells.length < 1 && !xWin && !circleWin) {
             setGameState({ type: ACTIONS.UPDATE_WINNER, payload: "draw" });
         }
+    }
+
+    function handleCellClick(cellNumber: number) {
+        const selectedCell = cells.find(({ cell }) => cell === cellNumber);
+        const cell = selectedCell?.cell;
+    
+        if (emptyCells.length < 1) return;
+        if (selectedCell?.selection !== null) return;
+        if (gameState.turn === gameState.computerSelection) return;
+        if (!cell || !gameState.playerSelection) return;
+    
+        selectCell(cell, gameState.playerSelection);
+        getComputerSelection();
+    }
+
+    function getComputerSelection() {
+        setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.computerSelection });
+
+        setTimeout(() => {
+            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            const cellNumber = randomCell.cell;
+
+            if (!gameState.computerSelection) return;
+            
+            selectCell(cellNumber, gameState.computerSelection);
+            setGameState({ type: ACTIONS.UPDATE_TURN, payload: gameState.playerSelection });
+        }, COMPUTER_DELAY);
     }
 
     function nextRound() {
@@ -89,7 +117,39 @@ export default function App() {
                 {
                     gameState.choosingSelection ?
                     <SelectingScreen/> :
-                    <CellGrid/>
+                    <div className="cell-grid">
+                        <ScoreBox
+                            heading="You"
+                            value={gameState.playerScore}
+                            selection={gameState.playerSelection}
+                        />
+                        <ScoreBox
+                            heading="Round"
+                            value={gameState.round}
+                        />
+                        <ScoreBox
+                            heading="Computer"
+                            value={gameState.computerScore}
+                            selection={gameState.computerSelection}
+                        />
+                        {
+                            cells.map(({ cell, selection }) => {
+                                return (
+                                    <Cell 
+                                        key={cell} 
+                                        cell={cell}
+                                        selection={selection}
+                                        handleCellClick={handleCellClick}
+                                    />
+                                );
+                            })
+                        }
+                        <div className={`outlined-box turn-box ${gameState.turn}-color`}>
+                            { gameState.turn === "x" && <X/> }
+                            { gameState.turn === "circle" && <Circle/> }
+                            <span className='text'>Playing</span>
+                        </div>
+                    </div>
                 }
             </main>
 
